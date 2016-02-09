@@ -1,0 +1,27 @@
+.sliders {
+  margin: 20px 0;
+}
+
+.sliders input {
+  width: 80px;
+  height: 300px;
+  -webkit-appearance: slider-vertical;
+}
+
+.sliders input[data-current="true"]::-webkit-slider-container {
+  background: darkturquoise;
+}
+
+button {
+  padding: 30px;
+  font-size: 30px;
+  border: none;
+}
+
+button.play {
+  background: aquamarine;
+}
+
+button.stop {
+  background: hotpink;
+}
