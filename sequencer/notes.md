@@ -18,11 +18,11 @@ oscillator.stop(audioCtx.currentTime + 1);
 
 ```
 
-## make it a `playNote` function, that accepts a frequency, startTime 
+## make it a `playNote` function, that accepts a frequency
 
 eg. 
 ```
-function playNote(frequency, startTime) {
+function playNote(frequency) {
   var oscillator = audioCtx.createOscillator();
   var gainNode = audioCtx.createGain();
 
@@ -30,20 +30,23 @@ function playNote(frequency, startTime) {
   gainNode.connect(audioCtx.destination);
 
   oscillator.frequency.value = frequency;
-  oscillator.start(startTime);
-  oscillator.stop(startTime + 0.5);
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.5);
 }
 
-playNote(500, 0);
-playNote(300, 1);
+playNote(500);
 ```
 
 ## make a sequence of notes
 
 ```
+var currentNote = 0;
+var counter = 0;
+
 var sequence = setInterval(function() {
-  playNote(notes[currentNote%notes.length]);
-  currentNote++;
+  currentNote = counter%notes.length;
+  playNote(notes[currentNote]);
+  counter++;
 }, noteInterval * 1000);
 ```
 
@@ -57,7 +60,8 @@ var playButton = document.querySelector('.play');
 function startSequence() {
   var counter = 0;
   sequence = setInterval(function() {
-    playNote(notes[counter%notes.length]);
+    currentNote = counter%notes.length;
+    playNote(notes[currentNote]);
     counter++;
   }, noteInterval * 1000);
 }
@@ -77,8 +81,8 @@ playButton.onclick = function() {
 
 ### sliders to control tones
 ```
-<input data-note="0" class="slider" orient="vertial" type="range" min="200" max="2000" step="100">
-<input data-note="1" class="slider" orient="vertial" type="range" min="200" max="2000" step="100">
+<input data-note="0" class="slider" orient="vertical" type="range" min="200" max="2000" step="100">
+<input data-note="1" class="slider" orient="vertical" type="range" min="200" max="2000" step="100">
 ```
 
 ```
@@ -122,6 +126,4 @@ function startSequence() {
 .sliders input[data-current="true"]::-webkit-slider-container {
   background: darkturquoise;
 }
-```
-
 ```
